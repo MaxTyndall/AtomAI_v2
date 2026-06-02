@@ -33,8 +33,11 @@ LOOK_RIGHT = 110
 LOOK_UP = 70
 LOOK_DOWN = 110
 
-EYE_OPEN = 0
-EYE_CLOSED = 60
+LEFT_EYE_OPEN = 80
+LEFT_EYE_CLOSED = 95
+
+RIGHT_EYE_OPEN = 110
+RIGHT_EYE_CLOSED = 95
 
 # ==================================================
 # NEO PIXEL
