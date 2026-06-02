@@ -40,7 +40,7 @@ EYE_CLOSED = 60
 # NEO PIXEL
 # ==================================================
 
-NEOPIXEL_PIN = "D18"
+NEOPIXEL_PIN = 18
 NUM_PIXELS = 8
 BRIGHTNESS = 0.3
 
