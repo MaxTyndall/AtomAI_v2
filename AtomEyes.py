@@ -18,11 +18,11 @@ class Eyes:
         self.set_angle(RIGHT_Y, CENTER_Y)
         self.open()
     def open(self):
-        self.set_angle(LEFT_BLINK, EYE_OPEN)
-        self.set_angle(RIGHT_BLINK, EYE_OPEN)
+        self.set_angle(LEFT_BLINK, LEFT_EYE_OPEN)
+        self.set_angle(RIGHT_BLINK, RIGHT_EYE_OPEN)
     def close(self):
-        self.set_angle(LEFT_BLINK, EYE_CLOSED)
-        self.set_angle(RIGHT_BLINK, EYE_CLOSED)
+        self.set_angle(LEFT_BLINK, LEFT_EYE_CLOSED)
+        self.set_angle(RIGHT_BLINK, RIGHT_EYE_CLOSED)
     def blink(self):
         self.close()
         sleep(BLINK_DELAY)
