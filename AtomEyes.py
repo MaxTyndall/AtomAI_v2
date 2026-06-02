@@ -31,7 +31,7 @@ class Eyes:
         self.blink()
         sleep(0.25)
         self.blink()
-   def wink_left(self):
+    def wink_left(self):
         self.set_angle(LEFT_BLINK, LEFT_EYE_CLOSED)
         sleep(0.2)
         self.set_angle(LEFT_BLINK, LEFT_EYE_OPEN)
