@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.pyc
+speech.mp3
+speech.wav
+reply.mp3
+input.wav
