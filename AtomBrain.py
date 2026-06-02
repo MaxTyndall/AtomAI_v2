@@ -59,8 +59,7 @@ class AtomBrain:
 
         return self.ai.ask(text)
 
-    def speak_reply(self, reply):
-
+        def speak_reply(self, reply):
         print(f"Atom: {reply}")
 
         mp3_file = self.ai.text_to_speech(
@@ -68,10 +67,11 @@ class AtomBrain:
             "reply.mp3"
         )
 
-        self.mouth.happy()
-
+        self.mouth.talking()
         self.speaker.speak(mp3_file)
 
+        self.mouth.happy()
+        sleep(0.5)
         self.mouth.clear()
 
     def run(self):
