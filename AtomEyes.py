@@ -40,11 +40,12 @@ class Eyes:
         sleep(0.2)
         self.set_angle(RIGHT_BLINK, RIGHT_EYE_OPEN)
     def look_left(self):
-        self.set_angle(LEFT_X, LOOK_LEFT)
-        self.set_angle(RIGHT_X, LOOK_LEFT)
+        self.set_angle(LEFT_X, LEFT_LOOK_LEFT)
+        self.set_angle(RIGHT_X, RIGHT_LOOK_LEFT)
+
     def look_right(self):
-        self.set_angle(LEFT_X, LOOK_RIGHT)
-        self.set_angle(RIGHT_X, LOOK_RIGHT)
+        self.set_angle(LEFT_X, LEFT_LOOK_RIGHT)
+        self.set_angle(RIGHT_X, RIGHT_LOOK_RIGHT)
     def look_up(self):
         self.set_angle(LEFT_Y, LOOK_UP)
         self.set_angle(RIGHT_Y, LOOK_UP)
