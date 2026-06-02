@@ -1,77 +1,110 @@
+# AtomEyes.py
+
 from adafruit_servokit import ServoKit
 from time import sleep
 import random
 
+from config import *
+
 kit = ServoKit(channels=16)
 
-LEFT_X = 0
-LEFT_Y = 1
-LEFT_BLINK = 2
-RIGHT_X = 3
-RIGHT_Y = 4
-RIGHT_BLINK = 5
+class Eyes:
 
-OPEN_LEFT = 0
-OPEN_RIGHT = 0
-CLOSED_LEFT = 60
-CLOSED_RIGHT = 60
+    def __init__(self):
+        self.center()
 
-CENTER_X = 90
-CENTER_Y = 90
+    def safe(self, value):
+        return max(0, min(180, value))
 
-def safe_angle(angle):
-    return max(0, min(180, angle))
+    def set_angle(self, channel, angle):
+        kit.servo[channel].angle = self.safe(angle)
 
-def set_servo(channel, angle):
-    kit.servo[channel].angle = safe_angle(angle)
+    def center(self):
 
-def open_eyes():
-    set_servo(LEFT_BLINK, OPEN_LEFT)
-    set_servo(RIGHT_BLINK, OPEN_RIGHT)
+        self.set_angle(LEFT_X, CENTER_X)
+        self.set_angle(RIGHT_X, CENTER_X)
 
-def close_eyes():
-    set_servo(LEFT_BLINK, CLOSED_LEFT)
-    set_servo(RIGHT_BLINK, CLOSED_RIGHT)
+        self.set_angle(LEFT_Y, CENTER_Y)
+        self.set_angle(RIGHT_Y, CENTER_Y)
 
-def blink():
-    close_eyes()
-    sleep(0.18)
-    open_eyes()
+        self.open()
 
-def blink_twice():
-    blink()
-    sleep(0.25)
-    blink()
+    def open(self):
 
-def wink_left():
-    set_servo(LEFT_BLINK, CLOSED_LEFT)
-    sleep(0.2)
-    set_servo(LEFT_BLINK, OPEN_LEFT)
+        self.set_angle(LEFT_BLINK, EYE_OPEN)
+        self.set_angle(RIGHT_BLINK, EYE_OPEN)
 
-def wink_right():
-    set_servo(RIGHT_BLINK, CLOSED_RIGHT)
-    sleep(0.2)
-    set_servo(RIGHT_BLINK, OPEN_RIGHT)
+    def close(self):
 
-def center_eyes():
-    set_servo(LEFT_X, CENTER_X)
-    set_servo(RIGHT_X, CENTER_X)
-    set_servo(LEFT_Y, CENTER_Y)
-    set_servo(RIGHT_Y, CENTER_Y)
-    open_eyes()
+        self.set_angle(LEFT_BLINK, EYE_CLOSED)
+        self.set_angle(RIGHT_BLINK, EYE_CLOSED)
 
-def look(x, y):
-    set_servo(LEFT_X, x)
-    set_servo(RIGHT_X, x)
-    set_servo(LEFT_Y, y)
-    set_servo(RIGHT_Y, y)
+    def blink(self):
 
-def look_random():
-    x = random.randint(70, 110)
-    y = random.randint(70, 110)
-    look(x, y)
+        self.close()
+        sleep(BLINK_DELAY)
+        self.open()
 
-def idle_eyes():
-    look_random()
-    if random.random() < 0.35:
-        blink()
+    def blink_twice(self):
+
+        self.blink()
+        sleep(0.25)
+        self.blink()
+
+    def wink_left(self):
+
+        self.set_angle(LEFT_BLINK, EYE_CLOSED)
+        sleep(0.2)
+        self.set_angle(LEFT_BLINK, EYE_OPEN)
+
+    def wink_right(self):
+
+        self.set_angle(RIGHT_BLINK, EYE_CLOSED)
+        sleep(0.2)
+        self.set_angle(RIGHT_BLINK, EYE_OPEN)
+
+    def look_left(self):
+
+        self.set_angle(LEFT_X, LOOK_LEFT)
+        self.set_angle(RIGHT_X, LOOK_LEFT)
+
+    def look_right(self):
+
+        self.set_angle(LEFT_X, LOOK_RIGHT)
+        self.set_angle(RIGHT_X, LOOK_RIGHT)
+
+    def look_up(self):
+
+        self.set_angle(LEFT_Y, LOOK_UP)
+        self.set_angle(RIGHT_Y, LOOK_UP)
+
+    def look_down(self):
+
+        self.set_angle(LEFT_Y, LOOK_DOWN)
+        self.set_angle(RIGHT_Y, LOOK_DOWN)
+
+    def random_look(self):
+
+        x = random.randint(LOOK_LEFT, LOOK_RIGHT)
+        y = random.randint(LOOK_UP, LOOK_DOWN)
+
+        self.set_angle(LEFT_X, x)
+        self.set_angle(RIGHT_X, x)
+
+        self.set_angle(LEFT_Y, y)
+        self.set_angle(RIGHT_Y, y)
+
+    def thinking_animation(self):
+
+        for _ in range(3):
+            self.random_look()
+            sleep(0.5)
+
+        self.center()
+
+    def idle(self):
+
+        self.random_look()
+
+        if random.random() < 0.3:
+            self.blink()
