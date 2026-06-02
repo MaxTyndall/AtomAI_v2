@@ -51,7 +51,7 @@ BRIGHTNESS = 0.3
 # AUDIO
 # ==================================================
 
-SAMPLE_RATE = 16000
+SAMPLE_RATE = 44100
 CHANNELS = 1
 CHUNK_SIZE = 1024
 
