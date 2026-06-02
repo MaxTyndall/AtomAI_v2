@@ -1,86 +1,50 @@
 # AtomMouth.py
 
+from time import sleep
 import board
 import neopixel
-import random
-from time import sleep
-
 from config import *
 
-pixels = neopixel.NeoPixel(
-    board.D18,
-    NUM_PIXELS,
-    brightness=BRIGHTNESS,
-    auto_write=False
-)
-
 class Mouth:
-
     def __init__(self):
+        self.pixels = neopixel.NeoPixel(
+            board.D18,
+            NUM_PIXELS,
+            brightness=BRIGHTNESS,
+            auto_write=False
+        )
         self.clear()
+
+    def set_all(self, color):
+        for i in range(NUM_PIXELS):
+            self.pixels[i] = color
+        self.pixels.show()
 
     def clear(self):
-        pixels.fill((0, 0, 0))
-        pixels.show()
-
-    def set_color(self, color):
-        pixels.fill(color)
-        pixels.show()
-
-    def thinking(self):
-
-        for i in range(NUM_PIXELS):
-            pixels.fill((0, 0, 0))
-            pixels[i] = (0, 0, 255)
-            pixels.show()
-            sleep(0.05)
-
-    def speak_level(self, level):
-
-        pixels.fill((0, 0, 0))
-
-        lit = max(1, min(NUM_PIXELS, level))
-
-        center_left = NUM_PIXELS // 2 - 1
-        center_right = NUM_PIXELS // 2
-
-        for i in range(lit // 2):
-
-            left = center_left - i
-            right = center_right + i
-
-            if 0 <= left < NUM_PIXELS:
-                pixels[left] = (0, 255, 0)
-
-            if 0 <= right < NUM_PIXELS:
-                pixels[right] = (0, 255, 0)
-
-        pixels.show()
-
-    def fake_talking(self, seconds=3):
-
-        import time
-
-        end_time = time.time() + seconds
-
-        while time.time() < end_time:
-
-            level = random.randint(1, NUM_PIXELS)
-
-            self.speak_level(level)
-
-            sleep(0.08)
-
-        self.clear()
-
-    def happy(self):
-        self.set_color((255, 255, 0))
-
-    def sad(self):
-        self.set_color((0, 0, 255))
-
-    def angry(self):
-        self.set_color((255, 0, 0))
+        self.set_all((0, 0, 0))
 
     def neutral(self):
-        self.set_color((0, 255, 0))
+        self.set_all((20, 20, 20))
+
+    def happy(self):
+        self.set_all((0, 255, 80))
+
+    def listening(self):
+        self.set_all((0, 100, 255))
+
+    def thinking(self):
+        for _ in range(3):
+            self.set_all((120, 0, 255))
+            sleep(0.2)
+            self.clear()
+            sleep(0.2)
+
+    def talking(self):
+        for _ in range(8):
+            self.set_all((0, 255, 0))
+            sleep(0.08)
+            self.set_all((0, 60, 0))
+            sleep(0.08)
+
+    def error(self):
+        self.set_all((255, 0, 0))
