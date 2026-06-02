@@ -1,0 +1,6 @@
+openai
+python-dotenv
+numpy
+pyaudio
+adafruit-circuitpython-servokit
+adafruit-circuitpython-neopixel
